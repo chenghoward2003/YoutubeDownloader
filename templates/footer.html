@@ -1,0 +1,34 @@
+    <footer style="background-color: #f8f9fa; padding: 2rem 0; margin-top: 3rem;">
+        <div style="max-width: 1200px; margin: 0 auto; padding: 0 1rem;">
+            <h3 style="text-align: center; color: #333; margin-bottom: 2rem;">Archive</h3>
+            <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; margin-bottom: 2rem;">
+                {% for content in content_list %}
+                <div style="background-color: white; border-radius: 10px; overflow: hidden; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+                    <img src="{{ content.cover.url }}" alt="{{ content.title }}" style="width: 100%; height: 200px; object-fit: cover;">
+                    <div style="padding: 1.5rem;">
+                        <h4 style="margin: 0 0 1rem 0; color: #333;">{{ content.title }}</h4>
+                        <div style="display: flex; flex-direction: column; gap: 0.8rem;">
+                            <a href="{{ content.link }}" target="_blank" style="color: #dc3545; text-decoration: none; font-weight: 500;">View on YouTube</a>
+                            <form method="POST" action="{% url 'mp3' %}" style="margin: 0;">
+                                {% csrf_token %}
+                                <input type="hidden" name="youtube_url" value="{{ content.link }}">
+                                <button type="submit" style="width: 100%; background-color: #dc3545; color: white; padding: 0.8rem; border: none; border-radius: 5px; font-size: 0.9rem; cursor: pointer; font-weight: bold;">Download MP3</button>
+                            </form>
+                            <form method="POST" action="{% url 'mp4' %}" style="margin: 0;">
+                                {% csrf_token %}
+                                <input type="hidden" name="youtube_url" value="{{ content.link }}">
+                                <button type="submit" style="width: 100%; background-color: #dc3545; color: white; padding: 0.8rem; border: none; border-radius: 5px; font-size: 0.9rem; cursor: pointer; font-weight: bold;">Download MP4</button>
+                            </form>
+                            <form method="POST" action="{% url 'delete_content' content.id %}" style="margin: 0;">
+                                {% csrf_token %}
+                                <button type="submit" style="width: 100%; background-color: #dc3545; color: white; padding: 0.8rem; border: none; border-radius: 5px; font-size: 0.9rem; cursor: pointer; font-weight: bold;" onclick="return confirm('Are you sure you want to delete this?')">Delete</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

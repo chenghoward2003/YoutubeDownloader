@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div style="max-width: 800px; margin: 2rem auto; padding: 0 1rem;">
+    <h2 style="text-align: center; color: #333; margin-bottom: 2rem;">Input link to download video</h2>
+    {% if error_message %}
+    <div style="background-color: #ffebee; color: #c62828; padding: 1rem; border-radius: 5px; margin-bottom: 1rem; text-align: center;">
+        {{ error_message }}
+    </div>
+    {% endif %}
+    <form method="POST" action="" style="background-color: #f8f9fa; padding: 2rem; border-radius: 10px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+        {% csrf_token %}
+        <div style="margin-bottom: 1.5rem;">
+            <input type="text" name="youtube_url" placeholder="Enter YouTube URL here..." required style="width: 100%; padding: 0.8rem; border: 1px solid #ddd; border-radius: 5px; font-size: 1rem;">
+        </div>
+        <button type="submit" style="background-color: #dc3545; color: white; padding: 0.8rem 2rem; border: none; border-radius: 5px; font-size: 1rem; cursor: pointer; font-weight: bold; display: block; margin: 0 auto;">Download MP4</button>
+    </form>
+</div>
+{% endblock %}
