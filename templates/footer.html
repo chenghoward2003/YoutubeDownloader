@@ -1,10 +1,10 @@
-    <footer style="background-color: #f8f9fa; padding: 2rem 0; margin-top: 3rem;">
+<footer style="background-color: #f8f9fa; padding: 2rem 0; margin-top: 3rem;">
         <div style="max-width: 1200px; margin: 0 auto; padding: 0 1rem;">
             <h3 style="text-align: center; color: #333; margin-bottom: 2rem;">Archive</h3>
             <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; margin-bottom: 2rem;">
                 {% for content in content_list %}
                 <div style="background-color: white; border-radius: 10px; overflow: hidden; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
-                    <img src="{{ content.cover.url }}" alt="{{ content.title }}" style="width: 100%; height: 200px; object-fit: cover;">
+                    <img src="{% if content.cover %}{{ content.cover.url }}{% else %}{% static 'images/youtube-logo.png' %}{% endif %}" alt="{{ content.title }}" style="width: 100%; height: 200px; object-fit: cover;">
                     <div style="padding: 1.5rem;">
                         <h4 style="margin: 0 0 1rem 0; color: #333;">{{ content.title }}</h4>
                         <div style="display: flex; flex-direction: column; gap: 0.8rem;">

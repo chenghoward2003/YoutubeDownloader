@@ -122,9 +122,9 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static'),
 ]
 
-# All user-uploaded files are now served from the static folder.
-# MEDIA_URL = '/media/'
-# MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+# Media files (user uploads) are stored in static but served with a different URL
+MEDIA_URL = '/uploads/'  # Different URL for media files
+MEDIA_ROOT = os.path.join(BASE_DIR, 'static')  # Still using static directory for storage
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
