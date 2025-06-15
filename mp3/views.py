@@ -17,7 +17,7 @@ ssl._create_default_https_context = ssl._create_stdlib_context
 logger = logging.getLogger(__name__)
 
 def index(request):
-    return render(request, 'index.html')
+    return render(request, 'index.html',  {'content_list': get_latest_content()})
 
 def download_mp3(request):
     if request.method != 'POST':
@@ -26,7 +26,7 @@ def download_mp3(request):
     youtube_url = request.POST.get('youtube_url')
     
     if not youtube_url or not youtube_url.startswith(('https://www.youtube.com/', 'https://youtu.be/')): # Check if youtube link is valid
-        error_message = 'Please provide a valid YouTube URL' if not youtube_url else 'Invalid YouTube URL. Please provide a valid YouTube URL.'
+        error_message = 'Please provide a valid YouTube URL'
         return render_with_error(request, 'mp3.html', error_message)
     
     temp_dir = tempfile.mkdtemp()
@@ -47,7 +47,7 @@ def download_mp3(request):
         video_clip = mp.AudioFileClip(video_path)
         video_clip.write_audiofile(mp3_path)
         
-        save_content(yt, youtube_url)
+        save_content(yt, youtube_url, user=request.user if request.user.is_authenticated else None)
         
         video_clip.close()
         os.remove(video_path)
@@ -75,7 +75,7 @@ def download_mp4(request):
         
     youtube_url = request.POST.get('youtube_url')
     if not youtube_url or not youtube_url.startswith(('https://www.youtube.com/', 'https://youtu.be/')):
-        error_message = 'Please provide a valid YouTube URL' if not youtube_url else 'Invalid YouTube URL. Please provide a valid YouTube URL.'
+        error_message = 'Please provide a valid YouTube URL'
         return render_with_error(request, 'mp4.html', error_message)
     
     temp_dir = tempfile.mkdtemp()
@@ -90,7 +90,7 @@ def download_mp4(request):
         video_path = video.download(output_path=temp_dir)
         mp4_filename = f"{yt.title}.mp4"
         
-        save_content(yt, youtube_url)
+        save_content(yt, youtube_url, user=request.user if request.user.is_authenticated else None)
         
         response = FileResponse(
             open(video_path, 'rb'),
@@ -113,11 +113,14 @@ def delete_content(request, content_id):
     if request.method == 'POST':
         try:
             content = Content.objects.get(id=content_id)
+            if content.cover:
+                if os.path.isfile(content.cover.path):
+                    os.remove(content.cover.path)
             content.delete()
-            return redirect(request.META.get('HTTP_REFERER', 'home'))
+            return redirect(request.META.get('HTTP_REFERER', '/'))
         except Content.DoesNotExist:
-            return redirect('home')
-    return redirect('home')
+            return redirect('/')
+    return redirect('/')
 
 def get_latest_content(limit=6):
     return Content.objects.all().order_by('-created_at')[:limit]
@@ -128,7 +131,7 @@ def render_with_error(request, template, error_message):
         'content_list': get_latest_content()
     })
 
-def save_content(yt, youtube_url):
+def save_content(yt, youtube_url, user=None):
     thumbnail_url = yt.thumbnail_url
     response = requests.get(thumbnail_url)
     
@@ -137,7 +140,8 @@ def save_content(yt, youtube_url):
         if not existing_content:
             content_instance = Content(
                 title=yt.title,
-                link=youtube_url
+                link=youtube_url,
+                user=user
             )
             thumbnail_file = BytesIO(response.content)
             content_instance.cover.save(f"{yt.title}.jpg", File(thumbnail_file), save=False)
