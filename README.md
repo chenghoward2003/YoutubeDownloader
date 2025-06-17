@@ -29,12 +29,18 @@ python manage.py runserver
 ```
 
 ## Appearance
-Here are some screenshots of the application's interface:
 
-| Login Page | Register Page | Home Page |
-|:----------:|:-------------:|:---------:|
-| ![Login](Screenshot/Login.jpg) | ![Register](Screenshot/Register.jpg) | ![Home](Screenshot/Home.jpg) |
+**Login Page**  
+![Login](Screenshot/Login.jpg)
 
-| Download as MP3 | Download History |
-|:---------------:|:----------------:|
-| ![MP3](Screenshot/MP3.jpg) | ![History](Screenshot/History.jpg) |
+**Register Page**  
+![Register](Screenshot/Register.jpg)
+
+**Home Page**  
+![Home](Screenshot/Home.jpg)
+
+**Download as MP3**  
+![MP3](Screenshot/MP3.jpg)
+
+**Download History**  
+![History](Screenshot/History.jpg)
