@@ -1,18 +1,15 @@
-# Standard library imports
-import os
-import tempfile
 import logging
+import os
 import ssl
+import tempfile
 import requests
 from io import BytesIO
-
-from django.shortcuts import render, redirect
-from django.http import FileResponse
 from django.core.files import File
-from pytubefix import YouTube
+from django.http import FileResponse
+from django.shortcuts import render, redirect
 import moviepy.editor as mp
+from pytubefix import YouTube
 from .models import Content
-
 ssl._create_default_https_context = ssl._create_stdlib_context
 logger = logging.getLogger(__name__)
 

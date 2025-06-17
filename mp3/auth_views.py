@@ -25,12 +25,13 @@ def register_view(request):
     if request.method == 'POST':
         username = request.POST.get('username')
         password = request.POST.get('password')
-        
+
         if User.objects.filter(username=username).exists():
             return render(request, 'register.html', {'error_message': 'Username already exists'})
-        
+
         user = User.objects.create_user(username=username, password=password)
         login(request, user)
+        messages.success(request, 'Registration successful!')
         return redirect('home')
-    
-    return render(request, 'register.html') 
+
+    return render(request, 'register.html')
