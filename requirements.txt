@@ -1,4 +1,4 @@
 Django>=5.2,<6.0
 requests
 pytubefix
-moviepy
+moviepy==2.2.1
