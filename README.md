@@ -1,6 +1,6 @@
-# YouTube Downloader 🎵📹
+# YouTube Downloader
 
-A Django-based web application that allows users to download YouTube videos as MP3 audio files, save download history, and manage content securely through an authentication system.
+A Django-based web application that allows users to download YouTube videos as well as audio files, save download history, and manage an authentication system
 
 ## 📌 Motivation
 
@@ -11,4 +11,4 @@ A Django-based web application that allows users to download YouTube videos as M
 
 - Download YouTube videos as MP3
 - User authentication (Login/Register)
-- Track and display download history
+- Track and display download history and the user who downloads the file
