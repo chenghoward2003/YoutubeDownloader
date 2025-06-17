@@ -1,5 +1,15 @@
 {% include "header.html" %} 
 
+{% if messages %}
+  <div style="max-width: 600px; margin: 1rem auto;">
+    {% for message in messages %}
+      <div style="background-color: #e6ffed; color: #256029; padding: 1rem; border-radius: 5px; margin-bottom: 1rem; text-align: center; font-weight: bold;">
+        {{ message }}
+      </div>
+    {% endfor %}
+  </div>
+{% endif %}
+
 {% block content %}
 {% endblock %} 
 
