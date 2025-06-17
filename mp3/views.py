@@ -22,7 +22,7 @@ def download_mp3(request):
         
     youtube_url = request.POST.get('youtube_url')
     
-    if not youtube_url or not youtube_url.startswith(('https://www.youtube.com/', 'https://youtu.be/')): # Check if youtube link is valid
+    if not youtube_url or not youtube_url.startswith(('https://www.youtube.com/', 'https://youtu.be/')):
         error_message = 'Please provide a valid YouTube URL'
         return render_with_error(request, 'mp3.html', error_message)
     
@@ -57,7 +57,7 @@ def download_mp3(request):
         
         def cleanup():
             cleanup_resources(mp3_path=mp3_path, temp_dir=temp_dir)
-        
+
         response.closed = cleanup
         return response
         
