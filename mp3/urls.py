@@ -1,7 +1,6 @@
 from django.contrib import admin
 from django.urls import include, path
-from . import views
-from . import auth_views
+from . import views, auth_views
 
 urlpatterns = [
     path('mp3/', views.download_mp3, name='mp3'),
