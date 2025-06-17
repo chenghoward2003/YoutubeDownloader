@@ -1,15 +1,18 @@
+# Standard library imports
 import os
 import tempfile
 import logging
 import ssl
 import requests
 from io import BytesIO
+
 from django.shortcuts import render, redirect
 from django.http import FileResponse
 from django.core.files import File
 from pytubefix import YouTube
-import moviepy as mp
+import moviepy.editor as mp
 from .models import Content
+
 ssl._create_default_https_context = ssl._create_stdlib_context
 logger = logging.getLogger(__name__)
 
@@ -130,8 +133,7 @@ def render_with_error(request, template, error_message):
 
 def save_content(yt, youtube_url, user=None):
     thumbnail_url = yt.thumbnail_url
-    headers = {'User-Agent': 'Mozilla/5.0'}
-    response = requests.get(thumbnail_url, headers=headers)
+    response = requests.get(thumbnail_url)
     
     if response.status_code == 200:
         existing_content = Content.objects.filter(title=yt.title).first()

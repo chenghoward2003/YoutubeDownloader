@@ -1,7 +1,7 @@
-from django.contrib import messages
+from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
-from django.shortcuts import render, redirect
+from django.contrib import messages
 
 def login_view(request):
     if request.method == 'POST':
@@ -31,7 +31,6 @@ def register_view(request):
         
         user = User.objects.create_user(username=username, password=password)
         login(request, user)
-        messages.success(request, 'Registration successful! Welcome, {}.'.format(username))
         return redirect('home')
     
-    return render(request, 'register.html')
+    return render(request, 'register.html') 
