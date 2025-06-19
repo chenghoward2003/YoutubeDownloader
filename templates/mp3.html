@@ -8,12 +8,20 @@
         {{ error_message }}
     </div>
     {% endif %}
-    <form method="POST" action="" style="background-color: #f8f9fa; padding: 2rem; border-radius: 10px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+    <div id="download-message" style="display:none; background-color: #e3f2fd; color: #1565c0; padding: 1rem; border-radius: 5px; margin-bottom: 1rem; text-align: center;">
+        Download started...
+    </div>
+    <form id="download-form" method="POST" action="" style="background-color: #f8f9fa; padding: 2rem; border-radius: 10px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
         {% csrf_token %}
         <div style="margin-bottom: 1.5rem;">
             <input type="text" name="youtube_url" placeholder="Enter YouTube URL here..." required style="width: 100%; padding: 0.8rem; border: 1px solid #ddd; border-radius: 5px; font-size: 1rem;">
         </div>
         <button type="submit" style="background-color: #dc3545; color: white; padding: 0.8rem 2rem; border: none; border-radius: 5px; font-size: 1rem; cursor: pointer; font-weight: bold; display: block; margin: 0 auto;">Download MP3</button>
     </form>
+    <script>
+      document.getElementById('download-form').addEventListener('submit', function() {
+        document.getElementById('download-message').style.display = 'block';
+      });
+    </script>
 </div>
 {% endblock %}
